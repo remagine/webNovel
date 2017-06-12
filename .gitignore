@@ -12,3 +12,26 @@ gradle-app.setting
 
 # # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
 # gradle/wrapper/gradle-wrapper.properties
+
+*.bak
+*~
+Thumbs.db
+/.classpath
+/.project
+/.idea/
+/bin/
+/.settings/
+/config/application-dev.properties
+/.gradle/
+/build/
+/src/test/java/sandbox/
+src/main/webapp/static/css/style.css.map
+/erd/
+/src/main/webapp/image/
+/src/main/webapp/uploadfiles/
+.vscode
+/.checkstyle
+*.log
+*.log.*
+logs/
+/src/main/webapp/file
