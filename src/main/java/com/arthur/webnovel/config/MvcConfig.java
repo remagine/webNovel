@@ -2,6 +2,7 @@ package com.arthur.webnovel.config;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -53,6 +54,11 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         RythmViewResolver resolver = new RythmViewResolver(rythmConfigurator());
         resolver.setSuffix(".rythm");
         return resolver;
+    }
+
+    @Bean
+    public ServerProperties getServerProperties() {
+        return new ServerCustomization();
     }
 
 }

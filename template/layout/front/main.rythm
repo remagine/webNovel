@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>@render(pageTitle){샘표식품 : 우리맛으로 세계인을 즐겁게}</title>
+    <title>@render(pageTitle){ webNovel - Welcome }</title>
     
     @render(meta){
         <meta name="keywords" content="novel" />
