@@ -1,0 +1,25 @@
+@charset "UTF-8";
+/* fonts
+-------------------------------------------------- */
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600");
+@import url("https://fonts.googleapis.com/css?family=PT+Serif:400,600");
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: url(/static/fonts/OpenSans-Regular.eot);
+  src: local(※), url(/static/fonts/OpenSans-Regular.woff2) format("woff2"), url(/static/fonts/OpenSans-Regular.woff) format("woff"); }
+
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 600;
+  src: url(/static/fonts/OpenSans-Semibold.eot);
+  src: local(※), url(/static/fonts/OpenSans-Semibold.woff2) format("woff2"), url(/static/fonts/OpenSans-Semibold.woff) format("woff"); }
+
+@font-face {
+  font-family: 'PT Serif';
+  font-style: normal;
+  font-weight: 400;
+  src: url(/static/fonts/pt-serif-regular.eot);
+  src: local(※), url(/static/fonts/pt-serif-regular.woff2) format("woff2"), url(/static/fonts/pt-serif-regular.woff) format("woff"); }

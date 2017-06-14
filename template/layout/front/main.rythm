@@ -17,11 +17,12 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0">
     <meta name="format-detection" content="telephone=no">
     
-    <script src="/static/js/jquery-1.11.2.min.js"></script>
+    <script src="/static/js/lib/jquery-1.11.2.min.js"></script>
     <script src="/static/bootstrap/js/bootstrap.min.js"></script>
     <link href="/static/css/toastr.min.css" rel="stylesheet">
     <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="/static/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/static/css/main-style.css" rel="stylesheet">
     
 </head>
 <body>
@@ -29,7 +30,6 @@
             사용중인 브라우저는 곧 지원이 중단되는 브라우저입니다. <a href="http://windows.microsoft.com/ko-kr/internet-explorer/ie-11-worldwide-languages" target="_blank">최신 버전</a>으로 업그레이드하시거나 <a href="https://www.google.com/intl/ko/chrome/browser/" target="_blank">Chrome</a>과 같은 최신 브라우저를 이용해 주세요.
             <button type="button" class="legacy-browser-close">닫기<i class="icon"></i></button>
     </div><![endif]-->
-<a href="#main" id="skipnav">Skip to main content</a>
 <div id="wrap">
     @include(layout.front.header)
     
@@ -39,9 +39,6 @@
 </div>
 
 @include(layout.front.sidenav)
-
-<script src="/static/js/config.js"></script>
-<script src="/static/js/lib/require.min.js" @render(script){}></script>
 
 @render(last){ }
 </body>
