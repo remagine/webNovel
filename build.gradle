@@ -61,6 +61,7 @@ dependencies {
 
     compile "org.springframework:spring-context:${SPRING_VERSION}"
     compile "org.springframework:spring-webmvc:${SPRING_VERSION}"
+    
 
     compile "org.slf4j:slf4j-api:${SLF4J_VERSION}"
     compile "org.slf4j:jcl-over-slf4j:${SLF4J_VERSION}"
@@ -69,7 +70,6 @@ dependencies {
     compile "ch.qos.logback:logback-classic:${LOGBACK_VERSION}"
 
     compile("org.rythmengine:rythm-engine:${RYTHM_VERSION}") { changing = true }
-    compile("com.ctlok:spring-webmvc-rythm:${SPRING_RYTHM_VERSION}") { changing = true }
 
     compile "com.google.guava:guava:${GUAVA_VERSION}"
     compile "org.apache.commons:commons-lang3:${COMMONS_LANG3_VERSION}"
@@ -79,6 +79,8 @@ dependencies {
     compile "com.zaxxer:HikariCP-java6:${HIKARI_VERSION}"
     compile "org.postgresql:postgresql:${POSTGRESQL_JDBC_VERSION}"
     compile "org.hibernate:hibernate-core:${HIBERNATE_VERSION}"
+    
+    compile fileTree(include: ['*.jar'], dir: 'libs')
 }
 
 task wrapper(type: Wrapper) { gradleVersion = '2.14' }

@@ -52,8 +52,6 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
     @Bean
     public RythmViewResolver viewResolver() {
         RythmViewResolver resolver = new RythmViewResolver(rythmConfigurator());
-        resolver.setContentType("text/html; charset=UTF-8");
-        resolver.setPrefix("/template/");
         resolver.setSuffix(".rythm");
         return resolver;
     }
