@@ -29,6 +29,10 @@ h6 {
     font-weight: 700;
 }
 
+#wrap{
+    width : 80%; margin : 0px auto;
+}
+
 .topnav {
     font-size: 14px; 
 }
