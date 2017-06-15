@@ -80,6 +80,8 @@ dependencies {
     compile "org.postgresql:postgresql:${POSTGRESQL_JDBC_VERSION}"
     compile "org.hibernate:hibernate-core:${HIBERNATE_VERSION}"
     
+    compile "com.fasterxml.jackson.core:jackson-databind:${JACKSON_VERSION}"
+    
     compile fileTree(include: ['*.jar'], dir: 'libs')
 }
 
