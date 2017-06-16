@@ -1,4 +1,8 @@
-@import() { org.apache.commons.lang3.* }
+@import() { 
+    com.arthur.webnovel.entity.*
+    com.arthur.webnovel.util.*
+    org.apache.commons.lang3.* 
+}
 
 <header id="header" class="header">
     <div class="l-content">
@@ -24,7 +28,7 @@
                         <button type="submit" class="btn btn-default">Submit</button>
                     </form>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#">LOGIN</a></li>
+                        <li><a href="@BusinessLogics.loginLink(request)">LOGIN</a></li>
                         <li><a href="#">REGISTER</a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">MY PAGE <span class="caret"></span></a>

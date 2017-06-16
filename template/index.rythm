@@ -1,4 +1,6 @@
 @import() {
+    com.arthur.webnovel.entity.*
+    com.arthur.webnovel.util.*
     org.apache.commons.lang3.*
 }
 
@@ -27,8 +29,5 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div>
-        <p>Hello World</p>
     </div>
 </main>
