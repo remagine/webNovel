@@ -18,37 +18,37 @@
     <div class="logo">REGISTER</div>
     <!-- Main Form -->
     <div class="login-form-1">
-        <form id="register-form" class="text-left">
+        <form id="register-form" class="text-left" action="/member/regist" method="POST">
             <div class="login-form-main-message"></div>
             <div class="main-login-form">
                 <div class="login-group">
                     <div class="form-group">
-                        <label for="reg_username" class="sr-only">Email address</label>
-                        <input type="text" class="form-control" id="reg_username" name="reg_username" placeholder="E-mail">
+                        <label for="email" class="sr-only">Email address</label>
+                        <input type="text" class="form-control" id="reg_username" name="email" placeholder="E-mail">
                     </div>
                     <div class="form-group">
-                        <label for="reg_password" class="sr-only">Password</label>
-                        <input type="password" class="form-control" id="reg_password" name="reg_password" placeholder="Password">
+                        <label for="password" class="sr-only">Password</label>
+                        <input type="password" class="form-control" id="reg_password" name="password" placeholder="Password">
                     </div>
                     <div class="form-group">
-                        <label for="reg_password_confirm" class="sr-only">Password Confirm</label>
-                        <input type="password" class="form-control" id="reg_password_confirm" name="reg_password_confirm" placeholder="Confirm Password">
+                        <label for="password_confirm" class="sr-only">Password Confirm</label>
+                        <input type="password" class="form-control" id="password_confirm" name="password_confirm" placeholder="Confirm Password">
                     </div>
                     
                     <div class="form-group">
-                        <label for="reg_email" class="sr-only">User Id</label>
-                        <input type="text" class="form-control" id="reg_email" name="reg_email" placeholder="User Id">
+                        <label for="userId" class="sr-only">User Id</label>
+                        <input type="text" class="form-control" id="userId" name="userId" placeholder="User Id">
                     </div>
                     <div class="form-group">
-                        <label for="reg_fullname" class="sr-only">Full Name</label>
-                        <input type="text" class="form-control" id="reg_fullname" name="reg_fullname" placeholder="Full name">
+                        <label for="fullname" class="sr-only">Full Name</label>
+                        <input type="text" class="form-control" id="fullname" name="fullname" placeholder="Full name">
                     </div>
                     
                     <div class="form-group login-group-checkbox">
-                        <input type="radio" class="" name="reg_gender" id="male">
+                        <input type="radio" class="" name="sex" id="male" value="M">
                         <label for="male">Male</label>
                         
-                        <input type="radio" class="" name="reg_gender" id="female">
+                        <input type="radio" class="" name="sex" id="female" value="F">
                         <label for="female">Female</label>
                     </div>
                     
@@ -83,56 +83,27 @@
 			'msg-error' : 'Wrong login credentials!',
 			'useAJAX' : true,
 		};
-
-		// Login Form
-		//----------------------------------------------
-		// Validation
-		$("#login-form").validate({
-			rules : {
-				lg_username : "required",
-				lg_password : "required",
-			},
-			messages : {
-				lg_username : "이메일 주소를 입력해 주세요.",
-				lg_password : "암호를 입력해 주세요.",
-			},
-			errorClass : "form-invalid"
-		});
-
-		// Form Submission
-		$("#login-form").submit(function() {
-			remove_loading($(this));
-
-			if (options['useAJAX'] == true) {
-				// Dummy AJAX request (Replace this with your AJAX code)
-				// If you don't want to use AJAX, remove this
-				dummy_submit_form($(this));
-
-				// Cancel the normal submission.
-				// If you don't want to use AJAX, remove this
-				return false;
-			}
-		});
-
 		// Register Form
 		//----------------------------------------------
 		// Validation
 		$("#register-form").validate(
 				{
 					rules : {
-						reg_username : "required",
-						reg_password : {
-							required : true,
-							minlength : 5
-						},
-						reg_password_confirm : {
-							required : true,
-							minlength : 5,
-							equalTo : "#register-form [name=reg_password]"
-						},
-						reg_email : {
+						email : {
 							required : true,
 							email : true
+						},
+						password : {
+							required : true,
+							minlength : 4
+						},
+						password_confirm : {
+							required : true,
+							minlength : 4,
+							equalTo : "#register-form [name=password]"
+						},
+						userId : {
+							required : true,
 						},
 						reg_agree : "required",
 					},
@@ -146,86 +117,6 @@
 						}
 				}
 		});
-
-		// Form Submission
-		$("#register-form").submit(function() {
-			remove_loading($(this));
-
-			if (options['useAJAX'] == true) {
-				// Dummy AJAX request (Replace this with your AJAX code)
-				// If you don't want to use AJAX, remove this
-				dummy_submit_form($(this));
-
-				// Cancel the normal submission.
-				// If you don't want to use AJAX, remove this
-				return false;
-			}
-		});
-
-		// Forgot Password Form
-		//----------------------------------------------
-		// Validation
-		$("#forgot-password-form").validate({
-			rules : {
-				fp_email : "required",
-			},
-			errorClass : "form-invalid"
-		});
-
-		// Form Submission
-		$("#forgot-password-form").submit(function() {
-			remove_loading($(this));
-
-			if (options['useAJAX'] == true) {
-				// Dummy AJAX request (Replace this with your AJAX code)
-				// If you don't want to use AJAX, remove this
-				dummy_submit_form($(this));
-
-				// Cancel the normal submission.
-				// If you don't want to use AJAX, remove this
-				return false;
-			}
-		});
-
-		// Loading
-		//----------------------------------------------
-		function remove_loading($form) {
-			$form.find('[type=submit]').removeClass('error success');
-			$form.find('.login-form-main-message').removeClass(
-					'show error success').html('');
-		}
-
-		function form_loading($form) {
-			$form.find('[type=submit]').addClass('clicked').html(
-					options['btn-loading']);
-		}
-
-		function form_success($form) {
-			$form.find('[type=submit]').addClass('success').html(
-					options['btn-success']);
-			$form.find('.login-form-main-message').addClass('show success')
-					.html(options['msg-success']);
-		}
-
-		function form_failed($form) {
-			$form.find('[type=submit]').addClass('error').html(
-					options['btn-error']);
-			$form.find('.login-form-main-message').addClass('show error').html(
-					options['msg-error']);
-		}
-
-		// Dummy Submit Form (Remove this)
-		//----------------------------------------------
-		// This is just a dummy form submission. You should use your AJAX function or remove this function if you are not using AJAX.
-		function dummy_submit_form($form) {
-			if ($form.valid()) {
-				form_loading($form);
-
-				setTimeout(function() {
-					form_success($form);
-				}, 2000);
-			}
-		}
 
 	})(jQuery);
 </script>
