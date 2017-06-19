@@ -18,4 +18,9 @@ public class StoryService {
         return storyDao.insert(story);
     }
 
+    @Transactional
+    public Story get(int storyId) {
+        return storyDao.get(storyId);
+    }
+
 }

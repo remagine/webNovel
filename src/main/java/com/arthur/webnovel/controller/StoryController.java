@@ -20,8 +20,8 @@ import com.arthur.webnovel.util.ViewMessage;
 
 @Controller
 @RequestMapping("/story")
-public class WriteController {
-    private static Logger log = LoggerFactory.getLogger(WriteController.class);
+public class StoryController {
+    private static Logger log = LoggerFactory.getLogger(StoryController.class);
 
     @Autowired
     private StoryService storyService;
@@ -46,6 +46,6 @@ public class WriteController {
         }
 
         ViewMessage.success().message("등록이 완료되었습니다.").register(attrs);
-        return "/story/edit/" + id;
+        return "/story/chapter/create/" + id;
     }
 }

@@ -48,7 +48,7 @@ public class Story {
     @Column(name = "cover_image")
     private String coverImage;
 
-    @Column(name = "views")
+    @Column(name = "views",  columnDefinition = "Integer default 0")
     private Integer views;
 
     @Enumerated(EnumType.STRING)
