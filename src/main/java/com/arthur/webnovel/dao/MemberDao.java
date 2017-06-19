@@ -3,6 +3,7 @@ package com.arthur.webnovel.dao;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
+import com.arthur.webnovel.code.State;
 import com.arthur.webnovel.entity.Member;
 
 @Repository
@@ -12,6 +13,10 @@ public class MemberDao extends DaoBase{
     }
 
     public Member select(String email) {
-        return (Member) session().createCriteria(Member.class).add(Restrictions.eq("email", email)).uniqueResult();
+        return (Member) session()
+                .createCriteria(Member.class)
+                .add(Restrictions.eq("email", email))
+                .add(Restrictions.eq("state", State.on))
+                .uniqueResult();
     }
 }

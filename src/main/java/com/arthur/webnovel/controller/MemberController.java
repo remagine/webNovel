@@ -18,6 +18,7 @@ import com.arthur.webnovel.entity.Member;
 import com.arthur.webnovel.service.MemberService;
 import com.arthur.webnovel.util.BaseUtil;
 import com.arthur.webnovel.util.BusinessLogics;
+import com.arthur.webnovel.util.Logics;
 import com.arthur.webnovel.util.ViewMessage;
 
 @Controller
@@ -43,22 +44,23 @@ public class MemberController {
             HttpServletRequest request,
             HttpSession session, HttpServletResponse res) throws Exception {
         if (StringUtils.isBlank(email) || StringUtils.isBlank(password)) {
-            ViewMessage.error().message("Please enter your email and password.").register(attrs);
+            ViewMessage.error().message("이메일 주소와 암호를 입력해 주세요.").register(attrs);
             return "redirect:/member/login?redirectUrl=" + StringUtils.defaultString(redirectUrl);
         }
 
         Result<Member> result = memberService.authenticate(email, password);
 
-        if (null != null) {
+        if (result.isError()) {
+            // login fail!
+            ViewMessage.error().message("비밀번호가 틀렸거나 존재하지않는 아이디입니다.").register(attrs);
+            return "redirect:/member/login?redirectUrl=" + redirectUrl;
+        } else {
+            Logics.memberToSession(result.payload(), session);
             if (StringUtils.isNotBlank(redirectUrl)) {
                 return "redirect:" + BusinessLogics.link(request, redirectUrl);
             } else {
                 return "redirect:" + BusinessLogics.link(request, "/");
             }
-        } else {
-            // login fail!
-            ViewMessage.error().message("비밀번호가 틀렸거나 존재하지않는 아이디입니다.").register(attrs);
-            return "redirect:/member/login?redirectUrl=" + redirectUrl;
         }
     }
 
