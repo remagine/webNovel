@@ -4,6 +4,10 @@
     org.apache.commons.lang3.*
 }
 
+@{
+    Member member = Logics.memberFromSession(request.getSession());
+}
+
 <!DOCTYPE html>
 <html class="no-js" lang="ko">
 <head>

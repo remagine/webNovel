@@ -4,6 +4,10 @@
     org.apache.commons.lang3.* 
 }
 
+@args {
+    Member member
+}
+
 <header id="header" class="header">
     <div class="l-content">
         <nav class="navbar navbar-default">
@@ -28,18 +32,22 @@
                         <button type="submit" class="btn btn-default">Submit</button>
                     </form>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="@BusinessLogics.loginLink(request)">LOGIN</a></li>
-                        <li><a href="/member/regist">REGISTER</a></li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">MY PAGE <span class="caret"></span></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="#">PROFILE</a></li>
-                                <li><a href="#">MAIL BOX</a></li>
-                                <li><a href="#">FRIENDES</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#">ETC</a></li>
-                            </ul>
-                        </li>
+                        @if (member == null){
+                            <li><a href="@BusinessLogics.loginLink(request)">LOGIN</a></li>
+                            <li><a href="/member/regist">REGISTER</a></li>
+                        } else {
+                            <li><a><i class="fa fa-user-circle fa-lg" aria-hidden="true"></i> @member.getUserId() 님</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">MY PAGE <span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">PROFILE</a></li>
+                                    <li><a href="#">MAIL BOX</a></li>
+                                    <li><a href="#">FRIENDES</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">LOGOUT</a></li>
+                                </ul>
+                            </li>
+                        }
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->
