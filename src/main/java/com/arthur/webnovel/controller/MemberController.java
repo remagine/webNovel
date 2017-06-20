@@ -18,6 +18,7 @@ import com.arthur.webnovel.entity.Member;
 import com.arthur.webnovel.service.MemberService;
 import com.arthur.webnovel.util.BaseUtil;
 import com.arthur.webnovel.util.BusinessLogics;
+import com.arthur.webnovel.util.Const;
 import com.arthur.webnovel.util.Logics;
 import com.arthur.webnovel.util.ViewMessage;
 
@@ -62,6 +63,15 @@ public class MemberController {
                 return "redirect:" + BusinessLogics.link(request, "/");
             }
         }
+    }
+
+    @RequestMapping(value = "/logout")
+    public String logout(Model model, HttpSession session) {
+        session.removeAttribute(Const.MEMBER_IN_SESSION_KEY);
+        //세션 소멸이 아니라 무효화
+        session.invalidate();
+
+        return "redirect:/";
     }
 
     @RequestMapping(value = "/regist", method = RequestMethod.GET)
