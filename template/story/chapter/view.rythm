@@ -31,14 +31,42 @@
                     <a href="#" id="delBtn" class="btn btn-danger " data-url="/op/admin/recipe-theme/list/delete/recipe-theme"> Delete (삭제)</a>
                 </div>
             </div>
+            
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table ">
+                        <colgroup>
+                            <col width="20%">
+                            <col width="30%">
+                            <col width="20%">
+                            <col width="30%">
+                        </colgroup>
+                        <tbody>                            
+                            <tr>
+                                <th>Registration date</th>
+                                <td></td>
+                                <th>Registered person</th>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <th>Final modification time</th>
+                                <td></td>
+                                <th>Final modifier</th>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+                
         </form>
     </div>
     <!-- /.box-body -->
-    @include(story.sidenav)
 </div>
 @section('last'){
     <script>
     CKEDITOR.replace( 'body', {
     });     
+  
     </script>
 }
