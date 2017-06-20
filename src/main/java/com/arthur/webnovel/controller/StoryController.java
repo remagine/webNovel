@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -34,7 +35,6 @@ public class StoryController {
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public String create(Model model, Story story, HttpSession session, RedirectAttributes attrs){
         Member loginUser = Logics.memberFromSession(session);
-        log.debug("1. loginUser ::::: {} " , loginUser );
         story.setMember(loginUser);
         story.setState(State.on);
 
@@ -45,7 +45,22 @@ public class StoryController {
             return "redirect:/story/edit";
         }
 
-        ViewMessage.success().message("등록이 완료되었습니다.").register(attrs);
-        return "/story/chapter/create/" + id;
+        ViewMessage.success().message("스토리 등록이 완료되었습니다. 챕터를 작성해주세요.").register(attrs);
+        return "redirect:/story/view/" + id;
+    }
+
+    @RequestMapping(value = "/view/{storyId}", method = RequestMethod.GET)
+    public String view(@PathVariable("storyId") int storyId, Model model, HttpSession session, RedirectAttributes attrs){
+
+        Member loginUser = Logics.memberFromSession(session);
+
+        Story story = storyService.get(storyId, loginUser);
+        if(null != story){
+            model.addAttribute("story", story);
+            return "/story/edit/" + storyId;
+        } else {
+            ViewMessage.error().message("유효하지 않은 접근입니다.").register(attrs);
+            return "redirect:/";
+        }
     }
 }

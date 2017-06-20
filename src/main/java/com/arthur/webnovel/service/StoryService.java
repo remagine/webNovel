@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.arthur.webnovel.dao.StoryDao;
+import com.arthur.webnovel.entity.Member;
 import com.arthur.webnovel.entity.Story;
 
 @Service
@@ -19,8 +20,8 @@ public class StoryService {
     }
 
     @Transactional
-    public Story get(int storyId) {
-        return storyDao.get(storyId);
+    public Story get(int storyId, Member loginUser) {
+        return storyDao.get(storyId, loginUser);
     }
 
 }
