@@ -60,7 +60,7 @@ public class Story {
     private Date createAt;
 
     @ManyToOne
-    @JoinColumn(name="member_id")
+    @JoinColumn(name="member")
     private Member member;
 
     public Integer getId() {
