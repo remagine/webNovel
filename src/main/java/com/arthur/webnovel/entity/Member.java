@@ -1,6 +1,6 @@
 package com.arthur.webnovel.entity;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -46,7 +46,7 @@ public class Member {
 
     @OneToMany
     @JoinColumn(name = "story")
-    private ArrayList<Chapter> chapterList;
+    private List<Chapter> chapterList;
 
     public Integer getId() {
         return id;
@@ -102,6 +102,14 @@ public class Member {
 
     public void setState(State state) {
         this.state = state;
+    }
+
+    public List<Chapter> getChapterList() {
+        return chapterList;
+    }
+
+    public void setChapterList(List<Chapter> chapterList) {
+        this.chapterList = chapterList;
     }
 
 }
