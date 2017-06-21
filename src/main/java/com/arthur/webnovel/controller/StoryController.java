@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.arthur.webnovel.code.State;
 import com.arthur.webnovel.entity.Member;
 import com.arthur.webnovel.entity.Story;
+import com.arthur.webnovel.intercepter.MemberRole;
 import com.arthur.webnovel.service.StoryService;
 import com.arthur.webnovel.util.Logics;
 import com.arthur.webnovel.util.ViewMessage;
@@ -27,11 +28,13 @@ public class StoryController {
     @Autowired
     private StoryService storyService;
 
+    @MemberRole
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String create(Model model){
         return "/story/edit";
     }
 
+    @MemberRole
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public String create(Model model, Story story, HttpSession session, RedirectAttributes attrs){
         Member loginUser = Logics.memberFromSession(session);
@@ -49,6 +52,7 @@ public class StoryController {
         return "redirect:/story/view/" + id;
     }
 
+    @MemberRole
     @RequestMapping(value = "/view/{storyId}", method = RequestMethod.GET)
     public String view(@PathVariable("storyId") int storyId, Model model, HttpSession session, RedirectAttributes attrs){
 

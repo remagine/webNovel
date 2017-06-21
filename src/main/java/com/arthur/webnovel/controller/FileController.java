@@ -32,6 +32,7 @@ public class FileController {
     @Value("${webnovel.paths.uploadedFiles}")
     private String basedir;
 
+    // json형식으로 데이터를 넘길때 쓴다. ajax로 파일 업로드할때
     private final String fileResultFile = "\"filepath\":\"%s\"";
     private final String fileResultRename = "\"filerename\":\"%s\"";
     private final String fileResultOrgname = "\"fileorgname\":\"%s\"";
@@ -74,8 +75,6 @@ public class FileController {
                 log.error("Image Upload ERROR", e);
             }
         }
-
-
     }
 
     private void uploadFiles(String realFilepath, MultipartFile uploadfileImage) {
@@ -109,6 +108,4 @@ public class FileController {
         String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
         return fileExtension;
     }
-
-
 }

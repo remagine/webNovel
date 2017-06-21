@@ -8,10 +8,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import com.arthur.webnovel.intercepter.MemberLoginCheckInterceptor;
 import com.ctlok.springframework.web.servlet.view.rythm.RythmConfigurator;
 import com.ctlok.springframework.web.servlet.view.rythm.RythmViewResolver;
 
@@ -56,9 +58,20 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         return resolver;
     }
 
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(memberLoginCheckInterceptor()).addPathPatterns("/story/**");
+    }
+
     @Bean
     public ServerProperties getServerProperties() {
         return new ServerCustomization();
+    }
+
+    @Bean
+    public MemberLoginCheckInterceptor memberLoginCheckInterceptor() {
+        return new MemberLoginCheckInterceptor();
     }
 
 }

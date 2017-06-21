@@ -12,6 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.arthur.webnovel.entity.Member;
 import com.arthur.webnovel.entity.Story;
+import com.arthur.webnovel.intercepter.MemberRole;
 import com.arthur.webnovel.service.StoryService;
 import com.arthur.webnovel.util.Logics;
 import com.arthur.webnovel.util.ViewMessage;
@@ -23,6 +24,7 @@ public class ChapterContorller {
     private StoryService storyService;
 
     //처음 story 작성 후 chapter 작성 페이지로 이동
+    @MemberRole
     @RequestMapping(value = "/create/{storyId}", method = RequestMethod.GET)
     public String create(@PathVariable("storyId") int storyId, Model model , HttpSession session, RedirectAttributes attrs){
         Member loginUser = Logics.memberFromSession(session);
@@ -37,6 +39,7 @@ public class ChapterContorller {
     }
 
     //chapter 등록
+    @MemberRole
     @RequestMapping(value = "/create/{storyId}", method = RequestMethod.POST)
     public String registChapter(@PathVariable("storyId") int storyId, Model model , HttpSession session, RedirectAttributes attrs){
         Member loginUser = Logics.memberFromSession(session);

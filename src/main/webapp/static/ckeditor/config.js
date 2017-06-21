@@ -75,4 +75,5 @@ CKEDITOR.editorConfig = function( config ) {
 	//커스텀 설정
 	config.extraPlugins = 'wordcount,notification';
 	config.height = 500;
+	config.filebrowserUploadUrl ='/fileuploads/upload/images';
 };
