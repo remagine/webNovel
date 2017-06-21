@@ -38,8 +38,9 @@ public class MemberLoginCheckInterceptor extends HandlerInterceptorAdapter {
             if (memberRole != null) {
                 HttpSession session = request.getSession();
                 Member member = Logics.memberFromSession(session);
-
-                return gotoLoginPage(request, response);
+                if(null == member){
+                    return gotoLoginPage(request, response);
+                }
             }
         }
         return true;
