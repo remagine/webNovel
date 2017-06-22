@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.arthur.webnovel.code.Result;
+import com.arthur.webnovel.code.State;
 import com.arthur.webnovel.entity.Member;
+import com.arthur.webnovel.intercepter.MemberRole;
 import com.arthur.webnovel.service.MemberService;
 import com.arthur.webnovel.util.BaseUtil;
 import com.arthur.webnovel.util.BusinessLogics;
@@ -77,7 +79,6 @@ public class MemberController {
     @RequestMapping(value = "/regist", method = RequestMethod.GET)
     public String regist(@RequestParam(required = false, name = "redirectUrl", defaultValue = "") String redirectUrl,
             Model model) {
-
         model.addAttribute("redirectUrl", redirectUrl);
 
         return "/member/regist";
@@ -89,6 +90,7 @@ public class MemberController {
         if(StringUtils.isNotBlank(member.getEmail()) && StringUtils.isNotBlank(member.getPassword())){
             String pw = BaseUtil.getPassword(member.getPassword());
             member.setPassword(pw);
+            member.setState(State.on);
             int result = memberService.insert(member);
             if(result > 0){
                 ViewMessage.success().message("등록이 완료되었습니다.").register(attrs);
@@ -102,4 +104,42 @@ public class MemberController {
             return "redirect:/member/regist";
         }
     }
+
+    @MemberRole
+    @RequestMapping(value = "/mypage/profile")
+    public String profile(Model model, HttpSession session, RedirectAttributes attrs) {
+        Member loginUser = Logics.memberFromSession(session);
+
+       /*if(null == loginUser){
+            ViewMessage.error().message("로그인이 필요한 서비스입니다.").register(attrs);
+            return "redirect:/member/login";
+        }*/
+
+        model.addAttribute("member", loginUser);
+        return "/member/mypage/profile";
+    }
+
+    @MemberRole
+    @RequestMapping(value = "/mypage/update")
+    public String update(Model model, Member memberForm, HttpSession session, RedirectAttributes attrs) {
+        Member loginUser = Logics.memberFromSession(session);
+
+        /* if(null == loginUser){
+            ViewMessage.error().message("로그인이 필요한 서비스입니다.").register(attrs);
+            return "redirect:/member/login";
+        }*/
+        Member origin = memberService.select(loginUser.getId());
+        memberForm.setId(origin.getId());
+        memberForm.setState(State.on);
+        if(StringUtils.isBlank(memberForm.getPassword())){
+            memberForm.setPassword(origin.getPassword());
+        }
+        memberService.update(memberForm);
+
+        loginUser = memberService.select(memberForm.getId());
+        ViewMessage.success().message("수정이 완료되었습니다.").register(attrs);
+        model.addAttribute("member", loginUser);
+        return "redirect:/member/mypage/profile";
+    }
+
 }

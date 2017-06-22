@@ -38,4 +38,13 @@ public class MemberService {
         return memberDao.select(userId);
     }
 
+    @Transactional
+    public Member select(Integer id) {
+        return memberDao.select(id);
+    }
+
+    @Transactional
+    public void update(Member memberForm) {
+        memberDao.update(memberForm);
+    }
 }

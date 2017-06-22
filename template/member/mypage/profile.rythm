@@ -1,0 +1,116 @@
+@import() {
+    com.arthur.webnovel.entity.*
+    com.arthur.webnovel.util.*
+    org.apache.commons.lang3.*
+}
+
+@extends(layout.front.main)
+
+@section (pageTitle) {Profile : WebNovel}
+
+@section (meta) {
+    <meta name="keywords" content="PROFILE, 회원정보" />
+    <meta name="description" content="WebNovel profile" />
+}
+
+@args {
+    Member member
+}
+
+<!-- REGISTRATION FORM -->
+<div class="text-center" style="padding:50px 0">
+    <div class="logo">회원정보</div>
+    <!-- Main Form -->
+    <div class="login-form-1">
+        <form id="register-form" class="text-left" action="/member/mypage/update" method="POST">
+            <div class="login-form-main-message"></div>
+            <div class="main-login-form">
+                <div class="login-group">
+                    <div class="form-group">
+                        <label for="email" class="sr-only">Email address</label>
+                        <input type="text" class="form-control" id="reg_username" name="email" placeholder="E-mail" value="@member.email@">
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="sr-only">Password</label>
+                        <input type="password" class="form-control" id="reg_password" name="password" placeholder="Password">
+                    </div>
+                    <div class="form-group">
+                        <label for="password_confirm" class="sr-only">Password Confirm</label>
+                        <input type="password" class="form-control" id="password_confirm" name="password_confirm" placeholder="Confirm Password">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="userId" class="sr-only">User Id</label>
+                        <input type="text" class="form-control" id="userId" name="userId" placeholder="User Id" value="@member.userId@">
+                    </div>
+                    <div class="form-group">
+                        <label for="fullname" class="sr-only">Full Name</label>
+                        <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Full name" value="@member.fullName@">
+                    </div>
+                    
+                    <div class="form-group login-group-checkbox">
+                        <input type="radio" class="" name="sex" id="male" value="M" checked>
+                        <label for="male">Male</label>                        
+                        <input type="radio" class="" name="sex" id="female" value="F" @if(StringUtils.equals(member.getSex(),"F")){ checked}>
+                        <label for="female">Female</label>
+                    </div>                    
+                </div>
+                <button type="submit" class="login-button"><i class="fa fa-chevron-right"></i></button>
+            </div>            
+        </form>
+    </div>
+    <!-- end:Main Form -->
+</div>
+
+
+@section(last) {
+<script>
+    (function($) {
+        "use strict";
+
+        // Options for Message
+        //----------------------------------------------
+        var options = {
+            'btn-loading' : '<i class="fa fa-spinner fa-pulse"></i>',
+            'btn-success' : '<i class="fa fa-check"></i>',
+            'btn-error' : '<i class="fa fa-remove"></i>',
+            'msg-success' : 'All Good! Redirecting...',
+            'msg-error' : 'Wrong login credentials!',
+            'useAJAX' : true,
+        };
+        // Register Form
+        //----------------------------------------------
+        // Validation
+        $("#register-form").validate(
+                {
+                    rules : {
+                        email : {
+                            required : true,
+                            email : true
+                        },
+                        password : {                           
+                            minlength : 4
+                        },
+                        password_confirm : {                            
+                            minlength : 4,
+                            equalTo : "#register-form [name=password]"
+                        },
+                        userId : {
+                            required : true,
+                        },
+                        reg_agree : "required",
+                    },
+                    errorClass : "form-invalid",
+                    errorPlacement : function(label, element) {
+                        if (element.attr("type") === "checkbox"
+                                || element.attr("type") === "radio") {
+                            element.parent().append(label); // this would append the label after all your checkboxes/labels (so the error-label will be the last element in <div class="controls"> )
+                        } else {
+                            label.insertAfter(element); // standard behaviour
+                        }
+                }
+        });
+
+    })(jQuery);
+</script>
+}

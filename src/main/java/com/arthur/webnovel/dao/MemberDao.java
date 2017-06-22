@@ -19,4 +19,16 @@ public class MemberDao extends DaoBase{
                 .add(Restrictions.eq("state", State.on))
                 .uniqueResult();
     }
+
+    public void update(Member memberForm) {
+        session().update(memberForm);
+    }
+
+    public Member select(Integer id) {
+        return (Member) session()
+                .createCriteria(Member.class)
+                .add(Restrictions.eq("id", id))
+                .add(Restrictions.eq("state", State.on))
+                .uniqueResult();
+    }
 }
