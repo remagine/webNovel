@@ -1,0 +1,92 @@
+@import() {
+    com.arthur.webnovel.entity.*
+    com.arthur.webnovel.util.*
+    org.apache.commons.lang3.*
+}
+
+@extends(layout.front.main)
+
+@args {
+    List<Story> storyList;
+}
+
+@section('title') { Story : List }
+
+@{
+    Date current = new Date();
+}
+<div class="box">
+    <form id="go-list-form">
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-6">
+                <p></p>
+            </div>
+        </div>
+        <table class="table table-bordered table-hover">
+            <colgroup>
+                <col width="3%" />
+                <col width="*" />
+                <col width="20%"/>
+                <col width="15%" />
+                <col width="15%"/>
+                <col width="5%"/>
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>
+                        <input type="checkbox" class="cbr" name="idsToggle" data-bind-func="toggleCheck">
+                    </th>
+                    <th>제목</th>
+                    <th>Tags</th>
+                    <th>등장인물</th>
+                    <th>챕터수</th>
+                    <th>조회수</th>
+                </tr>
+            </thead>
+            <tbody>
+            @if(storyList.size() != 0){
+                @for(Story story : storyList){
+                <tr>
+                    <td>@story.id@</td>
+                    <td><a href="#">@story.title@</a></td>
+                    <td>@story.tag@</td>           
+                    <td></td>
+                    <td></td>
+                    <td>@story.views@</td>            
+                </tr> 
+                }
+            }
+            </tbody>
+        </table>
+        <div class="row">
+            <div class="pagination pagination-sm no-margin col-md-12 text-center">
+            </div>
+        </div>
+    </div>
+    <!-- /.box-body -->
+    <div class="box-footer clearfix">
+        <div class="row">
+            <div class="col-md-6">
+
+                <input value="recipe" type="hidden" name="type">
+
+                <button type="button" class="btn btn-sm btn-danger sp-danger-action" data-form-action="/admin/op/admin/@@language/recipe/list/0/delete">Delete selected contents</button>
+                <button type="button" class="btn btn-sm btn-default" data-form-action="/admin/op/admin/language/recipe/list/@@paging.getCurrentPage()/on">Disclose selected contents</button>
+                <button type="button" class="btn btn-sm" data-form-action="/admin/op/admin/@@language/recipe/list/@@paging.getCurrentPage()/off">Undisclose selected contents</button>
+            </div>
+            <div class="col-md-6 text-right">
+                <a href="/admin/language/recipe/create" class="btn btn-flat btn-default">Register</a>
+            </div>
+        </div>
+    </div>
+    </form>
+</div>
+
+@section('last') {
+ <script>
+    $(function(){
+        nav('content', 'recipe');
+    });
+ </script>
+}

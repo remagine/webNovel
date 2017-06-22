@@ -1,5 +1,7 @@
 package com.arthur.webnovel.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -27,6 +29,17 @@ public class StoryController {
 
     @Autowired
     private StoryService storyService;
+
+    @MemberRole
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public String list(Model model, HttpSession session){
+        Member loginUser = Logics.memberFromSession(session);
+
+        List<Story> storyList = storyService.list(loginUser);
+
+        model.addAttribute("storyList", storyList);
+        return "/story/list";
+    }
 
     @MemberRole
     @RequestMapping(value = "/create", method = RequestMethod.GET)
@@ -61,7 +74,7 @@ public class StoryController {
         Story story = storyService.get(storyId, loginUser);
         if(null != story){
             model.addAttribute("story", story);
-            return "/story/edit/" + storyId;
+            return "/story/list";
         } else {
             ViewMessage.error().message("유효하지 않은 접근입니다.").register(attrs);
             return "redirect:/";
