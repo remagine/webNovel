@@ -31,4 +31,9 @@ public class StoryService {
         return storyDao.list(loginUser);
     }
 
+    @Transactional
+    public void update(Story story) {
+        storyDao.update(story);
+    }
+
 }

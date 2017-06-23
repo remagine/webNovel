@@ -49,7 +49,7 @@
                 @for(Story story : storyList){
                 <tr>
                     <td>@story.id@</td>
-                    <td><a href="#">@story.title@</a></td>
+                    <td><a href="/story/view/@story.id@">@story.title@</a></td>
                     <td>@story.tag@</td>           
                     <td></td>
                     <td></td>
@@ -76,7 +76,7 @@
                 <button type="button" class="btn btn-sm" data-form-action="/admin/op/admin/@@language/recipe/list/@@paging.getCurrentPage()/off">Undisclose selected contents</button>
             </div>
             <div class="col-md-6 text-right">
-                <a href="/admin/language/recipe/create" class="btn btn-flat btn-default">Register</a>
+                <a href="/story/regist" class="btn btn-flat btn-default">Register</a>
             </div>
         </div>
     </div>

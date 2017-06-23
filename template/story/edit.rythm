@@ -1,4 +1,5 @@
 @import() {
+    com.arthur.webnovel.entity.*
     org.apache.commons.lang3.*
 }
 
@@ -6,10 +7,14 @@
 
 @section (pageTitle) { Write New Novel }
 
+@args{
+    Story story
+}
+
 
 <div class="box">
     <div class="box-body col-12 col-md-9">
-        <form id="form" role="form" class="form-horizontal" method="POST" action="/story/create">
+        <form id="form" role="form" class="form-horizontal" method="POST" action="/story/regist/@if( null != story) {@story.id@}" >
             <div class="form-group">
                 <label for="" class="col-md-2 control-label">Title (제목) *</label>
                 <div class="col-md-9">

@@ -31,4 +31,8 @@ public class StoryDao extends DaoBase{
 
         return q.list();
     }
+
+    public void update(Story story) {
+        session().update(story);
+    }
 }

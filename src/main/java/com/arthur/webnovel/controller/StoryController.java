@@ -42,13 +42,13 @@ public class StoryController {
     }
 
     @MemberRole
-    @RequestMapping(value = "/create", method = RequestMethod.GET)
+    @RequestMapping(value = "/regist", method = RequestMethod.GET)
     public String create(Model model){
         return "/story/edit";
     }
 
     @MemberRole
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    @RequestMapping(value = "/regist", method = RequestMethod.POST)
     public String create(Model model, Story story, HttpSession session, RedirectAttributes attrs){
         Member loginUser = Logics.memberFromSession(session);
         story.setMember(loginUser);
@@ -66,15 +66,35 @@ public class StoryController {
     }
 
     @MemberRole
+    @RequestMapping(value = "/regist/{storyId}", method = RequestMethod.POST)
+    public String update(@PathVariable("storyId") int storyId, Story story, HttpSession session, RedirectAttributes attrs, Model model){
+        Member loginUser = Logics.memberFromSession(session);
+
+        Story originStory = storyService.get(storyId, loginUser);
+        if(null != originStory && State.deleted != originStory.getState()){
+            story.setId(storyId);
+            story.setViews(originStory.getViews());
+            story.setState(originStory.getState());
+            story.setMember(originStory.getMember());
+
+            storyService.update(story);
+            ViewMessage.success().message("스토리 수정이 완료되었습니다.").register(attrs);
+            return "redirect:/story/view"+storyId;
+        } else {
+            ViewMessage.error().message("정상적 요청이 아닙니다.").register(attrs);
+            return "redirect:/story/view"+storyId;
+        }
+    }
+
+    @MemberRole
     @RequestMapping(value = "/view/{storyId}", method = RequestMethod.GET)
     public String view(@PathVariable("storyId") int storyId, Model model, HttpSession session, RedirectAttributes attrs){
-
         Member loginUser = Logics.memberFromSession(session);
 
         Story story = storyService.get(storyId, loginUser);
         if(null != story){
             model.addAttribute("story", story);
-            return "/story/list";
+            return "/story/edit";
         } else {
             ViewMessage.error().message("유효하지 않은 접근입니다.").register(attrs);
             return "redirect:/";
