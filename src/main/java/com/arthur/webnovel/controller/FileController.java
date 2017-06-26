@@ -54,6 +54,8 @@ public class FileController {
         if (!uploadfileImage.isEmpty()) {
             try {
                 String originalFilename = uploadfileImage.getOriginalFilename();
+                String originalExtension = getFileExtension(originalFilename);
+                String regEx = "(jpg|jpeg|png|gif|bmp)";
                 String fileRename = getFileRename(originalFilename);
 
                 String makeRandomDir1 = (BaseUtil.getRandomDir()).toString();
@@ -63,12 +65,17 @@ public class FileController {
                 String returnFilePath = Paths.get("/" + Const.IMAGE_PREFIX_PATH, makeRandomDir1, makeRandomDir2, fileRename).toString();
                 String realFilepath = Paths.get(saveDirectory, fileRename).toString();
 
-                makeFolder(saveDirectory);
-                uploadFiles(realFilepath, uploadfileImage);
-
-                if (StringUtils.isNoneBlank(CKEditorFuncNum)) {
+                if(originalExtension.matches(regEx)){
+                    makeFolder(saveDirectory);
+                    uploadFiles(realFilepath, uploadfileImage);
+                    if (StringUtils.isNoneBlank(CKEditorFuncNum)) {
+                        response.getWriter().write("<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction(" + CKEditorFuncNum + ", '"
+                                + returnFilePath.replace("\\", "\\\\") + "', '이미지가 업로드 되었습니다.');</script>");
+                        return;
+                    }
+                } else {
                     response.getWriter().write("<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction(" + CKEditorFuncNum + ", '"
-                            + returnFilePath.replace("\\", "\\\\") + "', '이미지가 업로드 되었습니다.');</script>");
+                            + returnFilePath.replace("\\", "\\\\") + "', ' jpg, jpeg, gif, bmp, png 확장자 파일만 허용됩니다.');</script>");
                     return;
                 }
             } catch (Exception e) {
