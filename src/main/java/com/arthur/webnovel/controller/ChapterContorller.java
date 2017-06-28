@@ -29,7 +29,6 @@ public class ChapterContorller {
     @Autowired
     private ChapterService chapterService;
 
-    //처음 story 작성 후 chapter 작성 페이지로 이동
     @MemberRole
     @RequestMapping(value = "/create/{storyId}", method = RequestMethod.GET)
     public String create(@PathVariable("storyId") int storyId, Model model , HttpSession session, RedirectAttributes attrs){
@@ -52,14 +51,12 @@ public class ChapterContorller {
         Member loginUser = Logics.memberFromSession(session);
 
         Story story = storyService.get(storyId, loginUser);
-        model.addAttribute("story", story);
         if(story != null){
             chapter.setStory(story);
             chapter.setState(State.on);
             chapter.setViews(0);
             Integer id = chapterService.insert(chapter);
-            model.addAttribute("chapter", chapter);
-            return "redirect:/story/chapter/view/"+story.getId() +"/"+id;
+            return "redirect:/story/chapter/edit/"+story.getId() +"/"+id;
         } else {
             ViewMessage.error().message("서버 오류로 저장에 실패했습니다.").register(attrs);
             return "redirect:/story/create";
@@ -82,7 +79,7 @@ public class ChapterContorller {
             chapterService.update(chapter);
             model.addAttribute("chapter", chapter);
             ViewMessage.success().message("저장되었습니다.").register(attrs);
-            return "redirect:/story/chapter/view/"+story.getId() +"/"+chapter.getId();
+            return "redirect:/story/chapter/edit/"+story.getId() +"/"+chapter.getId();
         } else {
             ViewMessage.error().message("서버 오류로 저장에 실패했습니다.").register(attrs);
             return "redirect:/story/create";
@@ -90,7 +87,7 @@ public class ChapterContorller {
     }
 
     @MemberRole
-    @RequestMapping(value = "/view/{storyId}/{chapterId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/edit/{storyId}/{chapterId}", method = RequestMethod.GET)
     public String view(@PathVariable("storyId") int storyId, @PathVariable("chapterId") int chapterId, Model model, HttpSession session, RedirectAttributes attrs){
         Member loginUser = Logics.memberFromSession(session);
         Story story = storyService.get(storyId, loginUser);
