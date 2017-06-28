@@ -1,0 +1,506 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.5.6
+-- Dumped by pg_dump version 9.5.1
+
+-- Started on 2017-06-28 17:52:09
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 192 (class 1259 OID 32047)
+-- Name: chapter; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE chapter (
+    id integer NOT NULL,
+    title character varying(1000) NOT NULL,
+    body text NOT NULL,
+    story integer NOT NULL,
+    create_at timestamp with time zone DEFAULT now(),
+    views integer DEFAULT 0,
+    state character varying(10)
+);
+
+
+--
+-- TOC entry 2193 (class 0 OID 0)
+-- Dependencies: 192
+-- Name: COLUMN chapter.id; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN chapter.id IS 'pk';
+
+
+--
+-- TOC entry 2194 (class 0 OID 0)
+-- Dependencies: 192
+-- Name: COLUMN chapter.title; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN chapter.title IS '제목';
+
+
+--
+-- TOC entry 2195 (class 0 OID 0)
+-- Dependencies: 192
+-- Name: COLUMN chapter.body; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN chapter.body IS '챕터 본문';
+
+
+--
+-- TOC entry 2196 (class 0 OID 0)
+-- Dependencies: 192
+-- Name: COLUMN chapter.story; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN chapter.story IS '스토리 Fk';
+
+
+--
+-- TOC entry 2197 (class 0 OID 0)
+-- Dependencies: 192
+-- Name: COLUMN chapter.create_at; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN chapter.create_at IS '작성일자';
+
+
+--
+-- TOC entry 2198 (class 0 OID 0)
+-- Dependencies: 192
+-- Name: COLUMN chapter.views; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN chapter.views IS '조회수';
+
+
+--
+-- TOC entry 193 (class 1259 OID 32050)
+-- Name: chapter_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE chapter_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- TOC entry 2199 (class 0 OID 0)
+-- Dependencies: 193
+-- Name: chapter_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE chapter_id_seq OWNED BY chapter.id;
+
+
+--
+-- TOC entry 188 (class 1259 OID 32004)
+-- Name: member; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE member (
+    email character varying(500) NOT NULL,
+    password character varying(1000),
+    user_id character varying(500),
+    full_name character varying(500),
+    sex character varying(2),
+    id integer NOT NULL,
+    state character varying(10)
+);
+
+
+--
+-- TOC entry 2200 (class 0 OID 0)
+-- Dependencies: 188
+-- Name: COLUMN member.email; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN member.email IS '사용자 계정 이메일';
+
+
+--
+-- TOC entry 2201 (class 0 OID 0)
+-- Dependencies: 188
+-- Name: COLUMN member.password; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN member.password IS '사용자 계정 암호';
+
+
+--
+-- TOC entry 2202 (class 0 OID 0)
+-- Dependencies: 188
+-- Name: COLUMN member.user_id; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN member.user_id IS '사이트 닉네임';
+
+
+--
+-- TOC entry 2203 (class 0 OID 0)
+-- Dependencies: 188
+-- Name: COLUMN member.full_name; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN member.full_name IS '사용자 실명';
+
+
+--
+-- TOC entry 2204 (class 0 OID 0)
+-- Dependencies: 188
+-- Name: COLUMN member.sex; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN member.sex IS '성별';
+
+
+--
+-- TOC entry 2205 (class 0 OID 0)
+-- Dependencies: 188
+-- Name: COLUMN member.id; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN member.id IS 'id pk';
+
+
+--
+-- TOC entry 189 (class 1259 OID 32012)
+-- Name: member_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE member_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- TOC entry 2206 (class 0 OID 0)
+-- Dependencies: 189
+-- Name: member_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE member_id_seq OWNED BY member.id;
+
+
+--
+-- TOC entry 190 (class 1259 OID 32023)
+-- Name: story; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE story (
+    id integer NOT NULL,
+    title character varying(1000) NOT NULL,
+    description text NOT NULL,
+    foreword text NOT NULL,
+    "character" character varying(1000),
+    co_author character varying(1000),
+    cover_image character varying(1000),
+    views integer DEFAULT 0,
+    state character varying(10) DEFAULT 'on'::character varying,
+    create_at timestamp with time zone DEFAULT now(),
+    member integer NOT NULL,
+    tag character varying(1000)
+);
+
+
+--
+-- TOC entry 2207 (class 0 OID 0)
+-- Dependencies: 190
+-- Name: COLUMN story.title; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN story.title IS '팬픽 제목';
+
+
+--
+-- TOC entry 2208 (class 0 OID 0)
+-- Dependencies: 190
+-- Name: COLUMN story.description; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN story.description IS '팬픽 설명';
+
+
+--
+-- TOC entry 2209 (class 0 OID 0)
+-- Dependencies: 190
+-- Name: COLUMN story.foreword; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN story.foreword IS '머릿말';
+
+
+--
+-- TOC entry 2210 (class 0 OID 0)
+-- Dependencies: 190
+-- Name: COLUMN story."character"; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN story."character" IS '등장인물';
+
+
+--
+-- TOC entry 2211 (class 0 OID 0)
+-- Dependencies: 190
+-- Name: COLUMN story.co_author; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN story.co_author IS '공동저자
+';
+
+
+--
+-- TOC entry 2212 (class 0 OID 0)
+-- Dependencies: 190
+-- Name: COLUMN story.cover_image; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN story.cover_image IS '표지 이미지';
+
+
+--
+-- TOC entry 2213 (class 0 OID 0)
+-- Dependencies: 190
+-- Name: COLUMN story.views; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN story.views IS '조회수';
+
+
+--
+-- TOC entry 2214 (class 0 OID 0)
+-- Dependencies: 190
+-- Name: COLUMN story.state; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN story.state IS '소설 게시물 상태';
+
+
+--
+-- TOC entry 2215 (class 0 OID 0)
+-- Dependencies: 190
+-- Name: COLUMN story.create_at; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN story.create_at IS '생성일시';
+
+
+--
+-- TOC entry 2216 (class 0 OID 0)
+-- Dependencies: 190
+-- Name: COLUMN story.member; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN story.member IS '멤버 id 참조키';
+
+
+--
+-- TOC entry 2217 (class 0 OID 0)
+-- Dependencies: 190
+-- Name: COLUMN story.tag; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN story.tag IS 'tag ';
+
+
+--
+-- TOC entry 191 (class 1259 OID 32028)
+-- Name: story_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE story_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- TOC entry 2218 (class 0 OID 0)
+-- Dependencies: 191
+-- Name: story_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE story_id_seq OWNED BY story.id;
+
+
+--
+-- TOC entry 2057 (class 2604 OID 32052)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY chapter ALTER COLUMN id SET DEFAULT nextval('chapter_id_seq'::regclass);
+
+
+--
+-- TOC entry 2052 (class 2604 OID 32014)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY member ALTER COLUMN id SET DEFAULT nextval('member_id_seq'::regclass);
+
+
+--
+-- TOC entry 2053 (class 2604 OID 32030)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY story ALTER COLUMN id SET DEFAULT nextval('story_id_seq'::regclass);
+
+
+--
+-- TOC entry 2187 (class 0 OID 32047)
+-- Dependencies: 192
+-- Data for Name: chapter; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY chapter (id, title, body, story, create_at, views, state) FROM stdin;
+1	test chapter	<p>test chaptertest chaptertest chaptertest chapter<img alt="" src="\\image\\KD\\HJ\\201706281659082843e98aca7-7370-4264-9e09-6bd5377a901a.png" style="height:498px; width:590px" /></p>\r\n	9	2017-06-28 16:29:34.958351+09	0	on
+2	test chaptertest chaptertest chapter	<p>test chaptertest chaptertest chaptertest chapter</p>\r\n	9	2017-06-28 16:59:59.606943+09	0	on
+3	full flow testfull flow testfull flow test	<p>full flow testfull flow testfull flow test</p>\r\n	21	2017-06-28 17:32:01.53615+09	0	on
+4	full flow testfull flow testfull flow testfull flow testfull flow testfull flow testfull flow testfull flow testfull flow testfull flow testfull flow testfull flow testfull flow testfull flow testfull flow testfull flow testfull flow testfull flow testfull flow testfull flow testfull flow testfull flow test	<p>full flow testfull flow testfull flow testfull flow test</p>\r\n	21	2017-06-28 17:32:06.834859+09	0	on
+5	flow testfull flow testfull flow testfull flow testfull flow testfull flow testfull flow testfull flow testfull flow testfull flow testfull flow testfull flow testfull flow testfull flow testfull flow testfull flow testfull flow testfull flow testfull flow test	<p>full flow testfull flow testfull flow testfull flow testfull flow testfull flow testfull flow test</p>\r\n	21	2017-06-28 17:33:03.995008+09	0	on
+6	full flow testfull flow testfull flow test	<p>full flow testfull flow testfull flow test</p>\r\n	21	2017-06-28 17:33:30.267937+09	0	on
+7	full flow test	<p>full flow test</p>\r\n	8	2017-06-28 17:33:39.159976+09	0	on
+\.
+
+
+--
+-- TOC entry 2219 (class 0 OID 0)
+-- Dependencies: 193
+-- Name: chapter_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('chapter_id_seq', 7, true);
+
+
+--
+-- TOC entry 2183 (class 0 OID 32004)
+-- Dependencies: 188
+-- Data for Name: member; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY member (email, password, user_id, full_name, sex, id, state) FROM stdin;
+test@test.com	03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4	test	\N	M	4	on
+remagine@naver.com	03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4	OTS	\N	M	3	on
+test@t	9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08	tester	돼지	F	2	on
+\.
+
+
+--
+-- TOC entry 2220 (class 0 OID 0)
+-- Dependencies: 189
+-- Name: member_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('member_id_seq', 4, true);
+
+
+--
+-- TOC entry 2185 (class 0 OID 32023)
+-- Dependencies: 190
+-- Data for Name: story; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY story (id, title, description, foreword, "character", co_author, cover_image, views, state, create_at, member, tag) FROM stdin;
+7	test	<p>test</p>\r\n	<p>test</p>\r\n	test	set	\N	\N	on	2017-06-19 18:11:53.915318+09	2	tset
+8	test2	<p>test2</p>\r\n	<p>test2</p>\r\n	test2	test2	\N	\N	on	2017-06-19 18:15:18.109841+09	2	test2
+9	제대로 된 소설을 써보자	<p>제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자제대로 된 소설을 써보자</p>\r\n	<p>파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.</p>\r\n	파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.	파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.	\N	\N	on	2017-06-19 18:24:40.776986+09	2	파일 업로드도 구현해야 한다.파일 업로드도 구현해야 한다.
+10	default value test	<p>default value test</p>\r\n	<p>default value test</p>\r\n	default value testdefault value testdefault value testdefault value test	default value testdefault value testdefault value testdefault value testdefault value test	\N	\N	on	2017-06-19 18:58:51.966164+09	2	default value testdefault value test
+11	default value test2	<p>default value test2default value test2</p>\r\n	<p>default value test2default value test2default value test2</p>\r\n	default value test2	default value test2	\N	\N	on	2017-06-19 19:01:46.984152+09	2	default value test2
+12	default value test2	<p>default value test2</p>\r\n	<p>default value test2</p>\r\n	default value test2	default value test2	\N	\N	on	2017-06-19 19:02:58.572835+09	2	default value test2
+13	test0620	<p>test0620</p>\r\n	<p>test0620</p>\r\n	test0620	test0620	\N	\N	on	2017-06-20 12:52:38.14582+09	2	test0620
+14	test0620test0620	<p>test0620test0620</p>\r\n	<p>test0620test0620</p>\r\n	test0620test0620	test0620test0620	\N	\N	on	2017-06-20 12:54:14.617168+09	2	test0620test0620
+15	test regist	<p>test regist</p>\r\n	<p>test regist</p>\r\n	test regist	test regist	\N	\N	on	2017-06-20 12:55:37.148653+09	2	test regist
+16	/story/chapter/edit	<p>/story/chapter/edit</p>\r\n	<p>/story/chapter/edit</p>\r\n	/story/chapter/edit	/story/chapter/edit	\N	\N	on	2017-06-20 13:05:40.112806+09	2	/story/chapter/edit
+17	tasdf	<p>tasdf</p>\r\n	<p>tasdf</p>\r\n	tasdf	tasdf	\N	\N	on	2017-06-20 14:49:06.318455+09	2	tasdf
+19	image testimage test	<p><img alt="" src="\\image\\SJ\\NN\\20170621171634080b8b68b48-079e-4de3-9371-3bf5c7b77f48.png" style="height:260px; width:260px" />image testimage test</p>\r\n	<p>image testimage testimage test<img alt="" src="\\image\\KP\\OT\\2017062117164558725a9b3e6-25e4-4e77-9510-8fb2ad970b88.png" style="height:690px; width:690px" /></p>\r\n	image test	image test	\N	\N	on	2017-06-21 17:17:01.08768+09	2	image test
+20	remagine	<p>remagine</p>\r\n	<p>remagine</p>\r\n	remagine	remagine	\N	\N	on	2017-06-22 17:53:31.189361+09	3	remagine
+21	full flow test	<p>full flow test</p>\r\n	<p>full flow test</p>\r\n	full flow test full flow test	full flow test	\N	\N	on	2017-06-28 17:31:54.789105+09	2	full flow test full flow test full flow test
+\.
+
+
+--
+-- TOC entry 2221 (class 0 OID 0)
+-- Dependencies: 191
+-- Name: story_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('story_id_seq', 21, true);
+
+
+--
+-- TOC entry 2067 (class 2606 OID 32057)
+-- Name: chapter_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY chapter
+    ADD CONSTRAINT chapter_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2061 (class 2606 OID 32064)
+-- Name: member_email_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY member
+    ADD CONSTRAINT member_email_key UNIQUE (email);
+
+
+--
+-- TOC entry 2063 (class 2606 OID 32022)
+-- Name: member_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY member
+    ADD CONSTRAINT member_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2065 (class 2606 OID 32035)
+-- Name: story_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY story
+    ADD CONSTRAINT story_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2068 (class 2606 OID 32039)
+-- Name: story_member_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY story
+    ADD CONSTRAINT story_member_id_fkey FOREIGN KEY (member) REFERENCES a_member(id);
+
+
+-- Completed on 2017-06-28 17:52:10
+
+--
+-- PostgreSQL database dump complete
+--
+
