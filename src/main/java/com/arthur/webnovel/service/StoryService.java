@@ -2,6 +2,7 @@ package com.arthur.webnovel.service;
 
 import java.util.List;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,12 +24,18 @@ public class StoryService {
 
     @Transactional
     public Story get(int storyId, Member loginUser) {
-        return storyDao.get(storyId, loginUser);
+        Story result = storyDao.get(storyId, loginUser);
+        Hibernate.initialize(result.getChapterList());
+        return result;
     }
 
     @Transactional
     public List<Story> list(Member loginUser) {
-        return storyDao.list(loginUser);
+        List<Story> storyList = storyDao.list(loginUser);
+        for(Story story : storyList){
+            Hibernate.initialize(story.getChapterList());
+        }
+        return storyList;
     }
 
     @Transactional

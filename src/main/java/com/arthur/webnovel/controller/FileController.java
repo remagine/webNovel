@@ -39,6 +39,8 @@ public class FileController {
     private final String fileResultID = "\"fileid\":\"%s\"";
     private final String fileResultText = "{\"filenowrite\":\"%s\"}";
 
+    private final int maxSize = 10*1024*1024;
+
     @RequestMapping(value = "/upload/images", method = RequestMethod.POST)
     @ResponseBody
     public void uploadImage(@RequestParam(required = false) MultipartFile uploadfileImage
@@ -46,16 +48,22 @@ public class FileController {
             ,HttpServletRequest request
             ,HttpServletResponse response) throws Exception{
 
+
         if (uploadfileImage == null || uploadfileImage.isEmpty()) {
             MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
             uploadfileImage = multipartRequest.getFile("upload"); //ckeditor 기본값
+        }
+
+        if(uploadfileImage.getSize() > maxSize){
+            response.getWriter().write("<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction(" + CKEditorFuncNum + ", , ' 10M bite 이하 파일만 허용됩니다.');</script>");
+            return;
         }
 
         if (!uploadfileImage.isEmpty()) {
             try {
                 String originalFilename = uploadfileImage.getOriginalFilename();
                 String originalExtension = getFileExtension(originalFilename);
-                String regEx = "(jpg|jpeg|png|gif|bmp)";
+                String regEx = "(.jpg|.jpeg|.png|.gif|.bmp)";
                 String fileRename = getFileRename(originalFilename);
 
                 String makeRandomDir1 = (BaseUtil.getRandomDir()).toString();
@@ -65,6 +73,7 @@ public class FileController {
                 String returnFilePath = Paths.get("/" + Const.IMAGE_PREFIX_PATH, makeRandomDir1, makeRandomDir2, fileRename).toString();
                 String realFilepath = Paths.get(saveDirectory, fileRename).toString();
 
+                log.debug("originalExtension {} regEx : {{}}", originalExtension, originalExtension.matches(regEx));
                 if(originalExtension.matches(regEx)){
                     makeFolder(saveDirectory);
                     uploadFiles(realFilepath, uploadfileImage);
@@ -115,4 +124,6 @@ public class FileController {
         String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
         return fileExtension;
     }
+
+
 }

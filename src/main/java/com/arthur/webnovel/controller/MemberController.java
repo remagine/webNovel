@@ -110,7 +110,7 @@ public class MemberController {
     public String profile(Model model, HttpSession session, RedirectAttributes attrs) {
         Member loginUser = Logics.memberFromSession(session);
 
-       /*if(null == loginUser){
+        /*if(null == loginUser){
             ViewMessage.error().message("로그인이 필요한 서비스입니다.").register(attrs);
             return "redirect:/member/login";
         }*/

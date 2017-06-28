@@ -62,7 +62,7 @@ public class StoryController {
         }
 
         ViewMessage.success().message("스토리 등록이 완료되었습니다. 챕터를 작성해주세요.").register(attrs);
-        return "redirect:/story/view/" + id;
+        return "redirect:/story/edit/" + id;
     }
 
     @MemberRole
@@ -79,16 +79,16 @@ public class StoryController {
 
             storyService.update(story);
             ViewMessage.success().message("스토리 수정이 완료되었습니다.").register(attrs);
-            return "redirect:/story/view"+storyId;
+            return "redirect:/story/edit"+storyId;
         } else {
             ViewMessage.error().message("정상적 요청이 아닙니다.").register(attrs);
-            return "redirect:/story/view"+storyId;
+            return "redirect:/story/edit"+storyId;
         }
     }
 
     @MemberRole
-    @RequestMapping(value = "/view/{storyId}", method = RequestMethod.GET)
-    public String view(@PathVariable("storyId") int storyId, Model model, HttpSession session, RedirectAttributes attrs){
+    @RequestMapping(value = "/edit/{storyId}", method = RequestMethod.GET)
+    public String edit(@PathVariable("storyId") int storyId, Model model, HttpSession session, RedirectAttributes attrs){
         Member loginUser = Logics.memberFromSession(session);
 
         Story story = storyService.get(storyId, loginUser);

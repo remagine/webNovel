@@ -1,6 +1,7 @@
 package com.arthur.webnovel.entity;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,10 +12,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.OrderBy;
 
 import com.arthur.webnovel.code.State;
 
@@ -62,6 +66,11 @@ public class Story {
     @ManyToOne
     @JoinColumn(name="member")
     private Member member;
+
+    @OneToMany
+    @OrderBy(clause = "id asc")
+    @JoinColumn(name = "story")
+    private List<Chapter> chapterList;
 
     public Integer getId() {
         return id;
@@ -158,4 +167,13 @@ public class Story {
     public void setMember(Member member) {
         this.member = member;
     }
+
+    public List<Chapter> getChapterList() {
+        return chapterList;
+    }
+
+    public void setChapterList(List<Chapter> chapterList) {
+        this.chapterList = chapterList;
+    }
+
 }

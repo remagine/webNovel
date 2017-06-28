@@ -1,5 +1,6 @@
 @import() {
     com.arthur.webnovel.entity.*
+    com.arthur.webnovel.util.*
     org.apache.commons.lang3.*
 }
 

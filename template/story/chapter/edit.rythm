@@ -1,18 +1,24 @@
 @import() {
+    com.arthur.webnovel.entity.*
+    com.arthur.webnovel.util.*
     org.apache.commons.lang3.*
 }
-
 @extends(layout.front.main)
 
 @section (pageTitle) { Write New Chapter }
 
+@args{
+    Story story
+    Chapter chapter
+}
+
 <div class="box">
-    <div class="box-body">
-        <form id="form" role="form" class="form-horizontal" method="POST" action="/story/chapter/create/{story_id}">
+    <div class="box-body col-12 col-md-9">
+        <form id="form" role="form" class="form-horizontal" method="POST" action="/story/chapter/create/@story.id@">
             <div class="form-group">
                 <label for="" class="col-md-2 control-label">Title (제목) *</label>
                 <div class="col-md-9">
-                    <input type="text" class="form-control" name="title" required placeholder=""  >
+                    <input type="text" class="form-control" name="title" required placeholder="">
                 </div>
             </div>
             <div class="form-group">

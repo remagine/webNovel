@@ -1,15 +1,22 @@
+@import() {
+    com.arthur.webnovel.entity.*
+    com.arthur.webnovel.util.*
+    org.apache.commons.lang3.*
+}
 
+@args{
+    Story story
+}
+@if(null != story){
 <div class="col-6 col-md-3 sidebar-offcanvas" id="sidebar">
-          <div class="list-group">
-            <a href="#" class="list-group-item active">Link</a>
-            <a href="#" class="list-group-item">Link</a>
-            <a href="#" class="list-group-item">Link</a>
-            <a href="#" class="list-group-item">Link</a>
-            <a href="#" class="list-group-item">Link</a>
-            <a href="#" class="list-group-item">Link</a>
-            <a href="#" class="list-group-item">Link</a>
-            <a href="#" class="list-group-item">Link</a>
-            <a href="#" class="list-group-item">Link</a>
-            <a href="#" class="list-group-item">Link</a>
-          </div>
-        </div>
+  <div class="list-group">
+    <a href="/story/view/@story.id@" class="list-group-item active">본문 수정</a>
+    
+        @for(Chapter chapter : story.getChapterList()){
+            <a href="/story/chapter/view/@story.id@/@chapter.id@" class="list-group-item">@chapter.getTitle()</a>
+        }
+    
+    <a href="/story/chapter/create/@story.id@" class="list-group-item">Add Chapter</a>
+  </div>
+</div>
+}
