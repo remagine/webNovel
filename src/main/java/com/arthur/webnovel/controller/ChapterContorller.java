@@ -96,7 +96,26 @@ public class ChapterContorller {
             Chapter chapter = chapterService.get(story, chapterId);
             model.addAttribute("story", story);
             model.addAttribute("chapter", chapter);
-            return "/story/chapter/view";
+            return "/story/chapter/edit";
+        } else {
+            ViewMessage.error().message("유효하지 않은 접근입니다.").register(attrs);
+            return "redirect:/";
+        }
+    }
+
+    @MemberRole
+    @RequestMapping(value = "/delete/{storyId}/{chapterId}")
+    public String delete(@PathVariable("storyId") int storyId, @PathVariable("chapterId") int chapterId, Model model, HttpSession session, RedirectAttributes attrs){
+        Member loginUser = Logics.memberFromSession(session);
+        Story story = storyService.get(storyId, loginUser);
+
+        if(null != story){
+            Chapter chapter = chapterService.get(story, chapterId);
+            chapter.setState(State.deleted);
+            chapterService.update(chapter);
+            model.addAttribute("story", story);
+            ViewMessage.success().message("삭제되었습니다.").register(attrs);
+            return "redirect:/story/edit/"+storyId;
         } else {
             ViewMessage.error().message("유효하지 않은 접근입니다.").register(attrs);
             return "redirect:/";

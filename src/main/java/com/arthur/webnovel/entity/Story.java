@@ -19,6 +19,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.OrderBy;
+import org.hibernate.annotations.Where;
 
 import com.arthur.webnovel.code.State;
 
@@ -68,6 +69,7 @@ public class Story {
     private Member member;
 
     @OneToMany
+    @Where(clause = "state not in ('deleted')")
     @OrderBy(clause = "id asc")
     @JoinColumn(name = "story")
     private List<Chapter> chapterList;
