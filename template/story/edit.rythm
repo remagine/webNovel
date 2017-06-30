@@ -60,7 +60,7 @@
                     <a href="/story/list" class="btn btn-warning"> Cancel (취소)</a>                    
                 </div>
                 <div class="col-md-5 text-right">
-                    <a href="#" id="delBtn" class="btn btn-danger " data-url="/op/admin/recipe-theme/list/delete/recipe-theme"> Delete (삭제)</a>
+                    <a href="/story/delete/@story.id@" id="delBtn" class="btn btn-danger"> Delete (삭제)</a>
                 </div>
             </div>   
 

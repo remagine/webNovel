@@ -19,6 +19,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.OrderBy;
+import org.hibernate.annotations.Type;
 import org.hibernate.annotations.Where;
 
 import com.arthur.webnovel.code.State;
@@ -44,8 +45,9 @@ public class Story {
     @Column(name = "character")
     private String character;
 
-    @Column(name = "tag")
-    private String tag;
+    @Column(name = "tags")
+    @Type(type = "com.iropke.common.hibernate.ArrayType")
+    private String[] tags;
 
     @Column(name = "co_author")
     private String coAuthor;
@@ -114,12 +116,12 @@ public class Story {
         this.character = character;
     }
 
-    public String getTag() {
-        return tag;
+    public String[] getTags() {
+        return tags;
     }
 
-    public void setTag(String tag) {
-        this.tag = tag;
+    public void setTags(String[] tags) {
+        this.tags = tags;
     }
 
     public String getCoAuthor() {

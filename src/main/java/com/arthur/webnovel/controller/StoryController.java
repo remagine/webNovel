@@ -34,9 +34,7 @@ public class StoryController {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String list(Model model, HttpSession session){
         Member loginUser = Logics.memberFromSession(session);
-
         List<Story> storyList = storyService.list(loginUser);
-
         model.addAttribute("storyList", storyList);
         return "/story/list";
     }
@@ -53,9 +51,7 @@ public class StoryController {
         Member loginUser = Logics.memberFromSession(session);
         story.setMember(loginUser);
         story.setState(State.on);
-
         Integer id = storyService.insert(story);
-
         if(id < 0) {
             ViewMessage.error().message("서버 오류로 저장에 실패했습니다.").register(attrs);
             return "redirect:/story/edit";
@@ -95,6 +91,24 @@ public class StoryController {
         if(null != story){
             model.addAttribute("story", story);
             return "/story/edit";
+        } else {
+            ViewMessage.error().message("유효하지 않은 접근입니다.").register(attrs);
+            return "redirect:/";
+        }
+    }
+
+    @MemberRole
+    @RequestMapping(value = "/delete/{storyId}")
+    public String delete(@PathVariable("storyId") int storyId, Model model, HttpSession session, RedirectAttributes attrs){
+        Member loginUser = Logics.memberFromSession(session);
+
+        Story story = storyService.get(storyId, loginUser);
+
+        if(null != story){
+            story.setState(State.deleted);
+            storyService.update(story);
+            ViewMessage.success().message(story.getTitle() + "이 삭제되었습니다.").register(attrs);
+            return "redirect:/story/list";
         } else {
             ViewMessage.error().message("유효하지 않은 접근입니다.").register(attrs);
             return "redirect:/";

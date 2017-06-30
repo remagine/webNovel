@@ -25,16 +25,21 @@ public class StoryService {
     @Transactional
     public Story get(int storyId, Member loginUser) {
         Story result = storyDao.get(storyId, loginUser);
-        Hibernate.initialize(result.getChapterList());
+        if(null != result){
+            Hibernate.initialize(result.getChapterList());
+        }
         return result;
     }
 
     @Transactional
     public List<Story> list(Member loginUser) {
         List<Story> storyList = storyDao.list(loginUser);
-        for(Story story : storyList){
-            Hibernate.initialize(story.getChapterList());
+        if(null != storyList && !storyList.isEmpty()){
+            for(Story story : storyList){
+                Hibernate.initialize(story.getChapterList());
+            }
         }
+
         return storyList;
     }
 
